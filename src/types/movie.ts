@@ -6,6 +6,8 @@ export interface Movie {
   release_date: string;
   vote_average: number;
   imdb_id?: string;
+  genre_ids: number[];
+  genres?: Genre[]; // add by the genre mapping
 }
 
 export interface MovieSearchResponse {
@@ -18,4 +20,9 @@ export interface MovieSearchResponse {
 export interface MovieSearchParams {
   query?: string;
   page?: number;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
 }
