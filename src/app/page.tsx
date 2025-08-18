@@ -5,6 +5,7 @@ import { Movie } from "@/types/movie";
 import { searchMovies } from "@/services/movieApi";
 import { MovieCard } from "@/components/MovieCard";
 import { useWatchedMovies } from "@/hooks/useWatchedMovies";
+import { useDebounce } from "@/hooks/useDebounce";
 import styles from "./page.module.css";
 
 const Home = () => {
@@ -16,22 +17,25 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { isWatched, toggleWatched } = useWatchedMovies();
 
-  useEffect(() => {
-    fetchMovies();
-  }, [page, searchQuery]);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await searchMovies({ query: searchQuery, page });
+      setError("");
+      const data = await searchMovies({ query: debouncedSearchQuery, page });
       setMovies(data.results);
       setTotalPages(data.total_pages);
-    } catch (_err) {
+    } catch (err) {
       setError("Failed to fetch movies");
     } finally {
       setLoading(false);
     }
-  }, [page, searchQuery]);
+  }, [page, debouncedSearchQuery]);
+
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
