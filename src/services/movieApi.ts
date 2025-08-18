@@ -6,8 +6,7 @@ import {
 } from "@/types/movie";
 
 // Use Bearer token
-const BEARER_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Zjg3ZjRlN2M0MGI3ZTJiZTc5NDhjM2I5Yjk0ODY1ZiIsIm5iZiI6MTc1NTQ5MjY5OC4zNDA5OTk4LCJzdWIiOiI2OGEyYjE1YTRkYTQyMDcyODcwYzA1MzkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.efJAdM-RvVKeh-zaTIVyhlI7hIyuiTq-dJ6_3MTQOVk";
+const BEARER_TOKEN = process.env.TMDB_BEARER_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3";
 const GENRE_LIST_URL = `${BASE_URL}/genre/movie/list`;
 
