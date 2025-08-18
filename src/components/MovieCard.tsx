@@ -56,4 +56,4 @@ export const MovieCard = ({
       <div className={styles.rating}>Rating: {movie.vote_average}/10</div>
     </div>
   );
-}
+};

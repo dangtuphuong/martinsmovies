@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useCallback } from 'react';
-import { Movie } from '@/types/movie';
-import { searchMovies } from '@/services/movieApi';
-import { MovieCard } from '@/components/MovieCard';
-import { useWatchedMovies } from '@/hooks/useWatchedMovies';
-import styles from './page.module.css';
+import { useEffect, useState, useCallback } from "react";
+import { Movie } from "@/types/movie";
+import { searchMovies } from "@/services/movieApi";
+import { MovieCard } from "@/components/MovieCard";
+import { useWatchedMovies } from "@/hooks/useWatchedMovies";
+import styles from "./page.module.css";
 
 const Home = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const { isWatched, toggleWatched } = useWatchedMovies();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Home = () => {
       setMovies(data.results);
       setTotalPages(data.total_pages);
     } catch (_err) {
-      setError('Failed to fetch movies');
+      setError("Failed to fetch movies");
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ const Home = () => {
 
           <div className={styles.pagination}>
             <button
-              onClick={() => setPage(p => Math.max(1, p - 1))}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
               className={styles.pageButton}
             >
@@ -84,7 +84,7 @@ const Home = () => {
               Page {page} of {totalPages}
             </span>
             <button
-              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               className={styles.pageButton}
             >
