@@ -24,20 +24,27 @@ export const MovieCard = ({
           alt={movie.title}
           width={300}
           height={520}
+          priority
           className="w-full h-90 object-cover object-top"
         />
 
-        {/* Floating watched button */}
+        {/* Floating watched button at the bottom of image, overlapping content */}
         <button
-          className={`absolute bottom-2 right-2 w-10 h-10 rounded-full font-medium transition-all duration-300 flex items-center justify-center ${
-            isWatched
-              ? "bg-green-600 text-white hover:bg-green-700"
-              : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
+          type="button"
           onClick={onToggleWatched}
-          title={isWatched ? "Mark as unwatched" : "Mark as watched"}
+          className={`
+            absolute bottom-0 right-4 transform translate-y-1/2
+            px-5 py-3
+            rounded-full
+            font-semibold text-sm
+            text-white
+            flex items-center justify-center
+            shadow-[0_8px_20px_rgba(147,82,179,0.6)]
+            hover:scale-105
+            transition-all duration-300
+          `}
         >
-          {isWatched ? "✓" : "+"}
+          {isWatched ? "Watched" : "Add to Watched"}
         </button>
       </div>
 
