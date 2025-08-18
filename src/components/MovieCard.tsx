@@ -17,18 +17,31 @@ export const MovieCard = ({
     : "/placeholder.jpg";
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[650px] flex flex-col">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[620px] flex flex-col">
       <div className="relative">
         <Image
           src={posterUrl}
           alt={movie.title}
           width={300}
           height={520}
-          className="w-full h-80 object-cover"
+          className="w-full h-90 object-cover object-top"
         />
+
+        {/* Floating watched button */}
+        <button
+          className={`absolute bottom-2 right-2 w-10 h-10 rounded-full font-medium transition-all duration-300 flex items-center justify-center ${
+            isWatched
+              ? "bg-green-600 text-white hover:bg-green-700"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+          onClick={onToggleWatched}
+          title={isWatched ? "Mark as unwatched" : "Mark as watched"}
+        >
+          {isWatched ? "✓" : "+"}
+        </button>
       </div>
 
-      <div className="p-4 flex-1 flex flex-col justify-between">
+      <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
           <h3
             className="text-lg font-bold text-gray-900 mb-2 truncate"
@@ -53,18 +66,7 @@ export const MovieCard = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <button
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-              isWatched
-                ? "bg-green-600 text-white hover:bg-green-700"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-            }`}
-            onClick={onToggleWatched}
-          >
-            {isWatched ? "Watched" : "Mark as Watched"}
-          </button>
-
+        <div className="flex">
           {movie.imdb_id ? (
             <a
               href={`https://www.imdb.com/title/${movie.imdb_id}`}
