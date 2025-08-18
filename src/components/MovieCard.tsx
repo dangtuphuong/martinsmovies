@@ -17,7 +17,7 @@ export const MovieCard = ({
     : "/placeholder.jpg";
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[620px] flex flex-col">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[630px] flex flex-col">
       <div className="relative">
         <Image
           src={posterUrl}
@@ -51,7 +51,7 @@ export const MovieCard = ({
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
           <h3
-            className="text-lg font-bold text-gray-900 mb-2 truncate"
+            className="text-2xl font-bold text-gray-900 mt-1 mb-2 truncate"
             title={movie.title}
           >
             {movie.title}
@@ -73,7 +73,7 @@ export const MovieCard = ({
           </div>
         </div>
 
-        <div className="flex">
+        <div className="flex mt-1 mb-1">
           {movie.imdb_id ? (
             <a
               href={`https://www.imdb.com/title/${movie.imdb_id}`}

@@ -63,8 +63,12 @@ const Home = () => {
         }}
       >
         <div className="mx-auto max-w-6xl">
-          <h1 className="text-xl font-bold mb-2">Movie Grid 1</h1>
-          <p className="text-lg">Home | Movie Grid 1</p>
+          <h1 className="text-xl font-bold mb-2">Movie Grid 3</h1>
+          <p className="text-lg flex items-center gap-4">
+            <span>Home</span>
+            <span>|</span>
+            <span className="text-gray-300">Page {page}</span>
+          </p>
         </div>
       </div>
 
@@ -72,7 +76,7 @@ const Home = () => {
         {/* Search Form */}
         <form
           onSubmit={handleSearch}
-          className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto mb-8"
+          className="flex flex-col w-[60%] sm:flex-row gap-4 mx-auto mb-8"
         >
           <input
             type="text"
