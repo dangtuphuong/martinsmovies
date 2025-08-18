@@ -29,7 +29,20 @@ button {
   background: #9352b3;
   color: #ffffff;
   transition: all 0.3s ease;
+  font-size: smaller;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 button:hover {
   background: #7a3f9c;
+}
+.outline-button {
+  background: transparent;
+  color: #9352b3;
+  border: 1px solid #9352b3;
+  transition: all 0.3s ease;
+}
+.outline-button:hover {
+  background: #9352b3;
+  color: #ffffff;
 }

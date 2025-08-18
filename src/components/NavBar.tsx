@@ -31,9 +31,7 @@ const Navbar = () => {
         ))}
       </div>
 
-      <button className="px-4 py-2 rounded-lg bg-[#9352B3] text-white hover:bg-[#7a3f9c] transition text-sm font-semibold">
-        LOGIN
-      </button>
+      <button className="px-4 py-2 rounded-lg">LOGIN</button>
     </nav>
   );
 };

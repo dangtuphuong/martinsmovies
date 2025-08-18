@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Movie } from "@/types/movie";
 import { searchMovies } from "@/services/movieApi";
 import { MovieCard } from "@/components/MovieCard";
+import { Pagination } from "@/components/Pagination";
 import { useWatchedMovies } from "@/hooks/useWatchedMovies";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -55,7 +56,7 @@ const Home = () => {
     <main>
       {/* Jumbotron */}
       <div
-        className="w-full text-white py-12 mb-2 shadow-lg"
+        className="w-full text-white py-12 shadow-lg"
         style={{
           background:
             "linear-gradient(rgba(161,31,60,0.9) 0%, rgba(147,82,179,0.9) 100%)",
@@ -78,11 +79,11 @@ const Home = () => {
             placeholder="Search movies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all"
           />
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all font-medium"
+            className="px-6 py-2 text-white rounded-lg focus:ring-2 focus:ring-offset-2 transition-all font-medium"
           >
             Search
           </button>
@@ -108,27 +109,11 @@ const Home = () => {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium"
-              >
-                Previous
-              </button>
-
-              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg font-medium">
-                Page {page} of {totalPages}
-              </span>
-
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium"
-              >
-                Next
-              </button>
-            </div>
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onPageChange={(p) => setPage(p)}
+            />
           </>
         )}
       </div>
