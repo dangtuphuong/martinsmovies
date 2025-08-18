@@ -3,8 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Movie } from "@/types/movie";
 import { searchMovies } from "@/services/movieApi";
-import { MovieCard } from "@/components/MovieCard";
-import { Pagination } from "@/components/Pagination";
+import { MovieCard } from "@/app/components/MovieCard";
+import { Pagination } from "@/app/components/Pagination";
 import { useWatchedMovies } from "@/hooks/useWatchedMovies";
 import { useDebounce } from "@/hooks/useDebounce";
 

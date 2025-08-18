@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand, Geist } from "next/font/google";
 import "./globals.css";
 
-import Navbar from "@/components/NavBar";
+import Navbar from "@/app/components/NavBar";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
