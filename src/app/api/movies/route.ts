@@ -1,4 +1,4 @@
-// import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { MovieSearchResponse, Movie, Genre } from "@/types/movie";
 
 const BEARER_TOKEN = process.env.TMDB_BEARER_TOKEN;
@@ -53,7 +53,7 @@ const mapGenresToMovies = (movies: Movie[], genres: Genre[]): Movie[] => {
   }));
 };
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get("query");
@@ -76,7 +76,7 @@ export async function GET(request: Request) {
     ]);
 
     if (!moviesResponse.ok) {
-      return Response.json(
+      return NextResponse.json(
         { error: "Failed to fetch movies" },
         { status: moviesResponse.status }
       );
@@ -85,12 +85,15 @@ export async function GET(request: Request) {
     const moviesData: MovieSearchResponse = await moviesResponse.json();
     const moviesWithGenres = mapGenresToMovies(moviesData.results, genres);
 
-    return Response.json({
+    return NextResponse.json({
       ...moviesData,
       results: moviesWithGenres,
     });
   } catch (error) {
     console.error("API Error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
