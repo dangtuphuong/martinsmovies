@@ -10,28 +10,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # 1. Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Use Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: "npm"
 
+      # 3. Install dependencies with caching
       - name: Install dependencies
         run: npm ci
 
+      # 4. Build Next.js app
       - name: Build Next.js
         run: npm run build
 
-      - name: Install Serverless Framework
-        run: npm install -g serverless
-
+      # 5. Deploy using Serverless
       - name: Deploy to AWS Lambda
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_REGION: ap-southeast-2
           TMDB_BEARER_TOKEN: ${{ secrets.TMDB_BEARER_TOKEN }}
         run: npx serverless deploy --stage prod

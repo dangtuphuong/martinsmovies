@@ -1,17 +1,15 @@
-service: martin-movie-app
-provider:
-  name: aws
-  runtime: nodejs18.x
+name: martin-movie-app
+
+app: martin-movie-app
+stage: prod
+
+component: "@sls-next/serverless-component@latest"
+
+inputs:
+  domain: null
   region: ap-southeast-2
-
-plugins:
-  - serverless-next.js
-
-custom:
-  serverless-nextjs:
-    domain:
-      enabled: false
-    memory: 512
-    timeout: 10
-    environment:
-      TMDB_BEARER_TOKEN: ${env:TMDB_BEARER_TOKEN}
+  memory: 512
+  timeout: 10
+  bucketName: martin-movie-app-bucket
+  env:
+    TMDB_BEARER_TOKEN: ${env:TMDB_BEARER_TOKEN}
