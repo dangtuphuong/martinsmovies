@@ -12,21 +12,21 @@ export const MovieCard = ({
   isWatched,
   onToggleWatched,
 }: MovieCardProps) => {
-  const posterUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : "/placeholder.jpg";
-
   return (
     <div className="bg-white rounded-sm shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[630px] flex flex-col">
       <div className="relative">
-        <Image
-          src={posterUrl}
-          alt={movie.title}
-          width={300}
-          height={520}
-          priority
-          className="w-full h-90 object-cover object-top"
-        />
+        {movie.poster_path ? (
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            width={300}
+            height={520}
+            priority
+            className="w-full h-90 object-cover object-top"
+          />
+        ) : (
+          <div className="w-full h-90 bg-gray-200" />
+        )}
 
         {/* Floating watched button at the bottom of image */}
         <button

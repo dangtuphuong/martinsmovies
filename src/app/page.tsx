@@ -5,6 +5,7 @@ import { Movie } from "@/types/movie";
 import { searchMovies } from "@/services/movies";
 import { fetchImdbIds } from "@/services/imdbs";
 import { MovieCard } from "@/app/components/MovieCard";
+import ViewSwitcher from "@/app/components/SwitchView";
 import { Pagination } from "@/app/components/Pagination";
 import { useWatchedMovies } from "@/hooks/useWatchedMovies";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -91,7 +92,7 @@ const Home = () => {
         {/* Search Form */}
         <form
           onSubmit={handleSearch}
-          className="flex flex-col w-[60%] sm:flex-row gap-4 mx-auto mb-8"
+          className="flex flex-col w-[60%] sm:flex-row gap-4 mx-auto"
         >
           <input
             type="text"
@@ -107,6 +108,8 @@ const Home = () => {
             Search
           </button>
         </form>
+
+        <ViewSwitcher />
 
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-sm mb-4">
