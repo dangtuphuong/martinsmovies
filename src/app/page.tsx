@@ -56,14 +56,16 @@ const Home = () => {
     <main>
       {/* Jumbotron */}
       <div
-        className="w-full text-white py-12 shadow-lg"
+        className="w-full text-white py-13 shadow-lg overlay-gradient"
         style={{
-          background:
-            "linear-gradient(rgba(161,31,60,0.9) 0%, rgba(147,82,179,0.9) 100%)",
+          background: `
+            linear-gradient(rgba(161,31,60,0.85), rgba(147,82,179,0.85)),
+            url(/images/jumbotron.jpg)
+          `,
         }}
       >
         <div className="mx-auto max-w-6xl">
-          <h1 className="text-xl font-bold mb-2">Movie Grid 3</h1>
+          <h1 className="text-4xl mb-2">Movie Grid 3</h1>
           <p className="text-lg flex items-center gap-4">
             <span>Home</span>
             <span>|</span>
