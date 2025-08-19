@@ -30,8 +30,9 @@ const Navbar = () => {
           </Link>
         ))}
       </div>
-
-      <button className="px-4 py-2 rounded-lg">LOGIN</button>
+      <Link href="/login">
+        <button className="px-4 py-2 rounded-lg cursor-pointer">LOGIN</button>
+      </Link>
     </nav>
   );
 };
