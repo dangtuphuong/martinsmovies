@@ -1,36 +1,23 @@
-import { SSTConfig } from "sst";
-import { NextjsSite } from "sst/constructs";
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="./.sst/platform/config.d.ts" />
 
-export default {
-  config(_input) {
+import * as dotenv from "dotenv";
+dotenv.config();
+
+export default $config({
+  app(input) {
     return {
-      name: "nextjs-lambda-app",
-      region: "ap-southeast-2", // Sydney, Australia
+      name: "martinsmovies",
+      removal: input?.stage === "production" ? "retain" : "remove",
+      protect: ["production"].includes(input?.stage),
+      home: "aws",
     };
   },
-  stacks(app) {
-    app.stack(function Site({ stack }) {
-      const site = new NextjsSite(stack, "site", {
-        // Direct environment variables (simple approach)
-        environment: {
-          NODE_ENV: app.stage === "production" ? "production" : "development",
-          TMDB_BEARER_TOKEN: process.env.TMDB_BEARER_TOKEN || "",
-        },
-
-        // Lambda function configuration
-        server: {
-          runtime: "nodejs18.x",
-          memorySize: 128,
-          timeout: "10 seconds",
-        },
-
-        buildCommand: "npm run build",
-
-        // Optimize for minimal CloudFront usage
-        cdk: { distribution: { priceClass: "PriceClass_100" } },
-      });
-
-      stack.addOutputs({ SiteUrl: site.url });
+  async run() {
+    new sst.aws.Nextjs("MyWeb", {
+      environment: {
+        TMDB_BEARER_TOKEN: process.env.TMDB_BEARER_TOKEN!,
+      },
     });
   },
-} satisfies SSTConfig;
+});
