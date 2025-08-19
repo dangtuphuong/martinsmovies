@@ -1,9 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./.sst/platform/config.d.ts" />
 
-import * as dotenv from "dotenv";
-dotenv.config();
-
 export default $config({
   app(input) {
     return {
