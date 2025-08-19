@@ -3,6 +3,7 @@ import { Quicksand, Geist } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/app/components/NavBar";
+import Footer from "@/app/components/Footer";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
