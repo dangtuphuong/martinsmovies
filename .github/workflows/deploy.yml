@@ -51,34 +51,21 @@ jobs:
           CI: true
           API_KEY: ${{ secrets.API_KEY }}
 
-      - name: Comment deployment URL on PR
-        if: github.event_name == 'pull_request'
+      - name: Comment deployment URL on commit
+        if: steps.deploy.outputs.site_url != ''
         uses: actions/github-script@v7
         with:
           script: |
             const siteUrl = '${{ steps.deploy.outputs.site_url }}';
-            if (siteUrl) {
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: `✅ **Deployment successful!**\n\n **Live site:** ${siteUrl}\n\n*Deployed from commit: ${context.sha.substring(0, 7)}*`
-              });
-            }
+            console.log(`✅ Deployment successful! Site URL: ${siteUrl}`);
 
-      - name: Create deployment status
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const siteUrl = '${{ steps.deploy.outputs.site_url }}';
-            const success = '${{ job.status }}' === 'success';
-
-            github.rest.repos.createDeploymentStatus({
+            // Create a commit status instead of deployment status
+            github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              deployment_id: context.payload.deployment?.id || 0,
-              state: success ? 'success' : 'failure',
-              environment_url: siteUrl || undefined,
-              description: success ? 'Deployment completed successfully' : 'Deployment failed'
+              sha: context.sha,
+              state: 'success',
+              target_url: siteUrl,
+              description: 'Site deployed successfully',
+              context: 'deploy/sst'
             });
