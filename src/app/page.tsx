@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Movie } from "@/types/movie";
-import { searchMovies } from "@/services/movieApi";
+import { searchMovies } from "@/services/movies";
+import { fetchImdbIds } from "@/services/imdbs";
 import { MovieCard } from "@/app/components/MovieCard";
 import { Pagination } from "@/app/components/Pagination";
 import { useWatchedMovies } from "@/hooks/useWatchedMovies";
@@ -23,10 +24,29 @@ const Home = () => {
     try {
       setLoading(true);
       setError("");
+
+      // 1. Fetch movies
       const data = await searchMovies({ query: debouncedSearchQuery, page });
-      setMovies(data.results);
+      setMovies(data.results); // display immediately
       setTotalPages(data.total_pages);
+
+      // 2. Fetch IMDb IDs in the background
+      const movieIds = data.results.map((m) => m.id);
+      if (movieIds.length > 0) {
+        try {
+          const imdbResults = await fetchImdbIds(movieIds);
+          setMovies((prevMovies) =>
+            prevMovies.map((movie) => {
+              const imdb = imdbResults.find((i) => i.id === movie.id);
+              return { ...movie, imdb_id: imdb?.imdb_id || null };
+            })
+          );
+        } catch (imdbErr) {
+          console.warn("Failed to fetch IMDb IDs:", imdbErr);
+        }
+      }
     } catch (err) {
+      console.error(err);
       setError("Failed to fetch movies");
     } finally {
       setLoading(false);
@@ -41,16 +61,6 @@ const Home = () => {
     e.preventDefault();
     setPage(1);
   };
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-red-50">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-          {error}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <main>
@@ -94,6 +104,12 @@ const Home = () => {
             Search
           </button>
         </form>
+
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+            {error}
+          </div>
+        )}
 
         {loading ? (
           <div className="flex items-center justify-center py-12">

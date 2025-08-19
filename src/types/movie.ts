@@ -5,9 +5,9 @@ export interface Movie {
   poster_path: string;
   release_date: string;
   vote_average: number;
-  imdb_id?: string;
   genre_ids: number[];
   genres?: Genre[]; // add by the genre mapping
+  imdb_id?: string | null;
 }
 
 export interface MovieSearchResponse {

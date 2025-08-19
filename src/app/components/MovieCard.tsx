@@ -28,7 +28,7 @@ export const MovieCard = ({
           className="w-full h-90 object-cover object-top"
         />
 
-        {/* Floating watched button at the bottom of image, overlapping content */}
+        {/* Floating watched button at the bottom of image */}
         <button
           type="button"
           onClick={onToggleWatched}
