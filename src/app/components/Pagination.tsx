@@ -1,10 +1,12 @@
 interface PaginationProps {
+  disabled?: boolean;
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
 export const Pagination = ({
+  disabled,
   page,
   totalPages,
   onPageChange,
@@ -32,7 +34,7 @@ export const Pagination = ({
       {/* Previous */}
       <button
         onClick={() => onPageChange(Math.max(1, page - 1))}
-        disabled={page === 1}
+        disabled={page === 1 || disabled}
         className="w-10 h-10 rounded-full flex items-center justify-center outline-button"
       >
         &lt;
@@ -42,6 +44,7 @@ export const Pagination = ({
       {getPageNumbers().map((num) => (
         <button
           key={num}
+          disabled={disabled}
           onClick={() => onPageChange(num)}
           className={`
             w-10 h-10 rounded-full flex items-center justify-center 
@@ -55,7 +58,7 @@ export const Pagination = ({
       {/* Next */}
       <button
         onClick={() => onPageChange(Math.min(totalPages, page + 1))}
-        disabled={page === totalPages}
+        disabled={page === totalPages || disabled}
         className="w-10 h-10 rounded-full flex items-center justify-center outline-button"
       >
         &gt;

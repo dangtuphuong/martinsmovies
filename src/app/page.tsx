@@ -9,6 +9,8 @@ import { Pagination } from "@/app/components/Pagination";
 import { useWatchedMovies } from "@/hooks/useWatchedMovies";
 import { useDebounce } from "@/hooks/useDebounce";
 
+const SKELETON_COUNT = 3;
+
 const Home = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ const Home = () => {
             setMovies((prevMovies) =>
               prevMovies.map((movie) => {
                 const imdb = imdbResults.find((i) => i.id === movie.id);
-                return { ...movie, imdb_id: imdb?.imdb_id ?? null };
+                return { ...movie, imdb_id: imdb?.imdb_id ?? undefined };
               })
             );
           })
@@ -112,16 +114,22 @@ const Home = () => {
           </div>
         )}
 
-        {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <span className="ml-3 text-gray-600">Loading...</span>
-          </div>
-        ) : (
-          <>
-            {/* Movies Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-              {movies.map((movie) => (
+        {/* Movies Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          {loading
+            ? Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
+                <div
+                  key={idx}
+                  className="animate-pulse border border-gray-200 rounded-lg overflow-hidden shadow-sm"
+                >
+                  <div className="bg-gray-300 h-80 w-full" />
+                  <div className="p-4 space-y-2 bg-white">
+                    <div className="h-5 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-15 bg-gray-200 rounded w-full"></div>
+                  </div>
+                </div>
+              ))
+            : movies.map((movie) => (
                 <MovieCard
                   key={movie.id}
                   movie={movie}
@@ -129,15 +137,16 @@ const Home = () => {
                   onToggleWatched={() => toggleWatched(movie.id)}
                 />
               ))}
-            </div>
+        </div>
 
-            {/* Pagination */}
-            <Pagination
-              page={page}
-              totalPages={totalPages}
-              onPageChange={(p) => setPage(p)}
-            />
-          </>
+        {/* Pagination */}
+        {!!totalPages && (
+          <Pagination
+            disabled={loading}
+            page={page}
+            totalPages={totalPages}
+            onPageChange={(p) => setPage(p)}
+          />
         )}
       </div>
     </main>
