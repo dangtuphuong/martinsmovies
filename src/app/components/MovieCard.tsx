@@ -75,14 +75,15 @@ export const MovieCard = ({
 
         <div className="flex mt-1 mb-1">
           {movie.imdb_id ? (
-            <a
-              href={`https://www.imdb.com/title/${movie.imdb_id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-200 font-medium text-center"
-            >
-              Read More
-            </a>
+            <button className="px-4 py-2 rounded-lg">
+              <a
+                href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read More
+              </a>
+            </button>
           ) : (
             <a
               href="#"

@@ -29,26 +29,27 @@ const Home = () => {
       const data = await searchMovies({ query: debouncedSearchQuery, page });
       setMovies(data.results); // display immediately
       setTotalPages(data.total_pages);
+      setLoading(false);
 
       // 2. Fetch IMDb IDs in the background
       const movieIds = data.results.map((m) => m.id);
       if (movieIds.length > 0) {
-        try {
-          const imdbResults = await fetchImdbIds(movieIds);
-          setMovies((prevMovies) =>
-            prevMovies.map((movie) => {
-              const imdb = imdbResults.find((i) => i.id === movie.id);
-              return { ...movie, imdb_id: imdb?.imdb_id || null };
-            })
-          );
-        } catch (imdbErr) {
-          console.warn("Failed to fetch IMDb IDs:", imdbErr);
-        }
+        fetchImdbIds(movieIds)
+          .then((imdbResults) => {
+            setMovies((prevMovies) =>
+              prevMovies.map((movie) => {
+                const imdb = imdbResults.find((i) => i.id === movie.id);
+                return { ...movie, imdb_id: imdb?.imdb_id ?? null };
+              })
+            );
+          })
+          .catch((imdbErr) => {
+            console.warn("Failed to fetch IMDb IDs:", imdbErr);
+          });
       }
     } catch (err) {
       console.error(err);
       setError("Failed to fetch movies");
-    } finally {
       setLoading(false);
     }
   }, [page, debouncedSearchQuery]);
