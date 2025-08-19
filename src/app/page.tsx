@@ -98,18 +98,18 @@ const Home = () => {
             placeholder="Search movies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:border-transparent outline-none transition-all"
           />
           <button
             type="submit"
-            className="px-6 py-2 text-white rounded-lg focus:ring-2 focus:ring-offset-2 transition-all font-medium"
+            className="px-6 py-2 text-white rounded-sm focus:ring-2 focus:ring-offset-2 transition-all font-medium"
           >
             Search
           </button>
         </form>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-sm mb-4">
             {error}
           </div>
         )}
@@ -120,7 +120,7 @@ const Home = () => {
             ? Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
                 <div
                   key={idx}
-                  className="animate-pulse border border-gray-200 rounded-lg overflow-hidden shadow-sm"
+                  className="animate-pulse border border-gray-200 rounded-sm overflow-hidden shadow-sm"
                 >
                   <div className="bg-gray-300 h-80 w-full" />
                   <div className="p-4 space-y-2 bg-white">

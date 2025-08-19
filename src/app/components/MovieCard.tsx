@@ -17,7 +17,7 @@ export const MovieCard = ({
     : "/placeholder.jpg";
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[630px] flex flex-col">
+    <div className="bg-white rounded-sm shadow-lg overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-[630px] flex flex-col">
       <div className="relative">
         <Image
           src={posterUrl}
@@ -75,7 +75,7 @@ export const MovieCard = ({
 
         <div className="flex mt-1 mb-1">
           {movie.imdb_id ? (
-            <button className="px-4 py-2 rounded-lg">
+            <button className="px-4 py-2 rounded-sm">
               <a
                 href={`https://www.imdb.com/title/${movie.imdb_id}`}
                 target="_blank"
@@ -87,7 +87,7 @@ export const MovieCard = ({
           ) : (
             <a
               href="#"
-              className="px-4 py-2 bg-gray-500 text-white rounded-lg cursor-not-allowed font-medium opacity-75 text-center"
+              className="px-4 py-2 bg-gray-500 text-white rounded-sm cursor-not-allowed font-medium opacity-75 text-center"
             >
               Read More
             </a>
